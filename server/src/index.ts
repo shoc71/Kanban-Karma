@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
 import apiRoutes from './routes/index'; // Import the secured API routes
 import { errorHandler } from './middleware/errorHandler';
+import cors from 'cors';
 
 dotenv.config();
 const app = express();

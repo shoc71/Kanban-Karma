@@ -6,7 +6,7 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'infiniteforever';
 
-console.log('JWT Secret:', JWT_SECRET);
+// console.log('JWT Secret:', JWT_SECRET);
 
 export interface AuthenticatedRequest extends Request {
     user?: { userId: string; email: string }; 

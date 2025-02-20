@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/shoc71/Kanban-Karma#readme",
   "dependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5"
   }
 }

@@ -1,22 +1,14 @@
 import React from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { getToken } from '../utils/authService';
 
-interface PrivateRouteProps extends RouteProps {
-  // any additional props if needed
+interface PrivateRouteProps {
+  children: JSX.Element;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
-  if (!Component) return null;
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
   const token = getToken();
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        token ? <Component {...props} /> : <Redirect to="/login" />
-      }
-    />
-  );
+  return token ? children : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;
