@@ -33,7 +33,12 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
         const payload = { userId: user.id, email: user.email };
 
         // Sign the JWT
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+        if (!token) {
+            res.status(500).json({ success: false, message: "Token generation failed" });
+            return;
+        }
 
         res.json({ success: true, data: token });
         
@@ -68,7 +73,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void>  => 
         const payload = { userId: newUser.id, email: newUser.email }
 
         // Sign the JWT
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
 
         res.status(201).json({  success: true, data: token });
 

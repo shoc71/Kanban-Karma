@@ -18,7 +18,13 @@ export function authenticateToken(
         NextFunction): void {
     // Getting the token from the Authorization header
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split('')[1];
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        res.status(401).json({ success: false, message: 'No token provided.' });
+        return;
+    }
+
+    const token = authHeader.split(' ')[1];
 
     if (!token) {
         logger.warn('Authentication failed: No token provided')

@@ -1,0 +1,27 @@
+{
+  "name": "kanban-karma",
+  "version": "1.0.0",
+  "description": "Kanban Board Personal Build",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run dev",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shoc71/Kanban-Karma.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/shoc71/Kanban-Karma/issues"
+  },
+  "homepage": "https://github.com/shoc71/Kanban-Karma#readme",
+  "dependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

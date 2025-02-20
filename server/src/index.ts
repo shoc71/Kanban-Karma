@@ -16,6 +16,8 @@ app.use('/api', apiRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`Server is live on http://localhost:${PORT}`)
 })
+
+export default server;
