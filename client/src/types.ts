@@ -4,5 +4,6 @@ export interface Task {
   title: string;
   status: "todo" | "in-progress" | "done";
   timestamp: string; // ISO string, for example
-  color?: string;    
+  color?: string;
+  boardId?: string;
 }

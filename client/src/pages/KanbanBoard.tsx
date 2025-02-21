@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Modal, Form, Alert } from 'react-bootstrap';
 import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
-import { Task } from '../types';
+import type { Task } from '../types';
 import { fetchTasks, createTask, updateTask, deleteTask } from '../utils/api';
 import { getToken } from '../utils/authService';
 
@@ -12,10 +12,11 @@ function KanbanBoard() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [newTaskStatus, setNewTaskStatus] = useState<"todo" | "in-progress" | "done">("todo");
   const [newTaskColor, setNewTaskColor] = useState<string>("#ffffff");
-
+  
+  // Retrieve token from localStorage
   const token = getToken();
-
-  // Fetch tasks on mount
+  
+  // Fetch tasks on mount if token exists
   useEffect(() => {
     if (!token) {
       setError('Please log in.');
@@ -35,9 +36,13 @@ function KanbanBoard() {
     };
     fetchData();
   }, [token]);
-
+  
   // Create new task
   const handleCreateTask = async () => {
+    if (!token) {
+      setError('Please log in.');
+      return;
+    }
     try {
       const newTask: Partial<Task> = {
         title: newTaskTitle,
@@ -57,20 +62,18 @@ function KanbanBoard() {
         setError(res.message || 'Task creation failed.');
       }
     } catch (error) {
-      // Debug HTTP 500 errors by logging the error details
       console.error("Create Task Error:", error);
       setError(`Task creation failed. ${error}`);
     }
   };
-
+  
   // Update task status (for drag and drop)
   const handleUpdateTaskStatus = async (taskId: string, newStatus: "todo" | "in-progress" | "done") => {
-    // Find task in state
+    if (!token) return;
     const taskToUpdate = tasks.find(task => task.id === taskId);
     if (!taskToUpdate) return;
     
     const updatedTask = { ...taskToUpdate, status: newStatus };
-    
     try {
       const res = await updateTask(updatedTask, token);
       if (res.success && res.data) {
@@ -83,9 +86,10 @@ function KanbanBoard() {
       setError(`Failed to update task. ${error}`);
     }
   };
-
+  
   // Delete task
   const handleDeleteTask = async (id: string) => {
+    if (!token) return;
     try {
       const res = await deleteTask(id, token);
       if (res.success) {
@@ -97,55 +101,77 @@ function KanbanBoard() {
       setError(`Failed to delete task. ${error}`);
     }
   };
-
+  
   // Handle drag and drop end
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
-    if (!destination) return; // dropped outside list
-    // If dropped in the same column, do nothing
+    if (!destination) return; // Dropped outside
     if (destination.droppableId === source.droppableId) return;
-    
-    // Update the task's status based on the droppableId of destination
     const newStatus = destination.droppableId as "todo" | "in-progress" | "done";
     handleUpdateTaskStatus(draggableId, newStatus);
   };
-
+  
   // Render tasks by column with drag-and-drop
   const renderColumn = (status: "todo" | "in-progress" | "done") => {
-    const columnTasks = tasks.filter(task => task.status === status);
+  const columnTasks = tasks.filter(task => task.status === status);
     return (
       <Col>
         <h4 className="text-center text-capitalize">{status.replace('-', ' ')}</h4>
-        <Droppable droppableId={status}>
+        <Droppable
+          droppableId={status}
+          isDropDisabled={false}
+          isCombineEnabled={false}
+          ignoreContainerClipping={false}
+        >
           {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
-              {columnTasks.map((task, index) => (
-                <Draggable key={task.id} draggableId={task.id} index={index}>
-                  {(provided) => (
-                    <Card 
-                      className="mb-3"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={{ 
-                        ...provided.draggableProps.style,
-                        backgroundColor: task.color || 'white'
-                      }}
-                    >
-                      <Card.Body>
-                        <Card.Title>{task.title}</Card.Title>
-                        <Card.Text>
-                          <small className="text-muted">
-                            {new Date(task.timestamp).toLocaleString()}
-                          </small>
-                        </Card.Text>
-                        <Button variant="outline-primary" size="sm" onClick={() => console.log("Edit task", task)}>Edit</Button>{' '}
-                        <Button variant="outline-danger" size="sm" onClick={() => handleDeleteTask(task.id)}>Delete</Button>
-                      </Card.Body>
-                    </Card>
-                  )}
-                </Draggable>
-              ))}
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{
+                minHeight: '300px',  // ensure a minimum height so empty columns still show a border/background
+                maxHeight: '500px',  // adjust as needed
+                overflowY: 'auto',   // vertical scroll when content exceeds height
+                border: '1px dashed #ccc',
+                padding: '10px',
+                borderRadius: '5px',
+                backgroundColor: '#f8f9fa'
+              }}
+            >
+              {columnTasks.length === 0 ? (
+                <div className="text-center text-muted">No tasks</div>
+              ) : (
+                columnTasks.map((task, index) => (
+                  <Draggable key={task.id} draggableId={task.id} index={index}>
+                    {(provided) => (
+                      <Card 
+                        className="mb-3"
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={{ 
+                          ...provided.draggableProps.style,
+                          backgroundColor: task.color || 'white'
+                        }}
+                      >
+                        <Card.Body>
+                          <Card.Title>{task.title}</Card.Title>
+                          <Card.Text>
+                            <small className="text-muted">
+                              {new Date(task.timestamp).toLocaleString()}
+                            </small>
+                          </Card.Text>
+                          <Button variant="outline-primary" size="sm" onClick={() => console.log("Edit task", task)}>
+                            Edit
+                          </Button>{' '}
+                          <Button variant="outline-danger" size="sm" onClick={() => handleDeleteTask(task.id)}>
+                            Delete
+                          </Button>
+                        </Card.Body>
+                      </Card>
+                    )}
+                  </Draggable>
+                ))
+              )}
               {provided.placeholder}
             </div>
           )}
@@ -153,7 +179,7 @@ function KanbanBoard() {
       </Col>
     );
   };
-
+  
   return (
     <Container className="mt-5">
       {error && <Alert variant="danger">{error}</Alert>}
@@ -169,7 +195,7 @@ function KanbanBoard() {
           {renderColumn("done")}
         </Row>
       </DragDropContext>
-
+  
       {/* Modal for creating a new task */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
