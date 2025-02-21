@@ -11,11 +11,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'infiniteforever';
 
 // console.log('JWT Secret:', JWT_SECRET);
 
-router.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}))
+router.use(cors());
 
 // Login Route
 router.post('/login', async (req: Request, res: Response): Promise<void> => {
@@ -78,7 +74,7 @@ router.post('/register', async (req: Request, res: Response): Promise<void>  => 
         // Sign the JWT
         const token = jwt.sign({ userId: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
 
-        res.status(201).json({  success: true, data: token });
+        res.status(200).json({  success: true, data: token });
 
     } catch (error) {
         console.error("Server error:", error);

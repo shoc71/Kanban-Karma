@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchTasks } from '../utils/api';
 import { getToken } from '../utils/authService';
 import { Container, Alert, ListGroup } from 'react-bootstrap';
+import { Task } from '../types';
 
-interface Task {
-  id: string;
-  title: string;
-  // include other task properties as needed
-}
 
-const Dashboard: React.FC = () => {
+
+function Dashboard() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string>('');
 

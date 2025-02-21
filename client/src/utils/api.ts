@@ -7,7 +7,7 @@ export interface ApiResponse<T> {
 }
 
 export async function loginUser(email: string, password: string): Promise<ApiResponse<string>> {
-  const response = await fetch(`${API_URL}/auth/login`, {
+  const response = await fetch(`${API_URL}/api/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ export async function loginUser(email: string, password: string): Promise<ApiRes
 
 export async function registerUser(email: string, password: string) {
   try {
-    const response = await fetch(`${API_URL}/auth/register`, {
+    const response = await fetch(`${API_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -45,8 +45,8 @@ export async function registerUser(email: string, password: string) {
   }
 }
 
-export async function fetchTasks(token: string) {
-  const response = await fetch(`${API_URL}/tasks`, {
+export async function fetchTasks(token: string): Promise<ApiResponse<Task[]>> {
+  const response = await fetch(`${API_URL}/api/auth/tasks`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -59,4 +59,60 @@ export async function fetchTasks(token: string) {
 
   const data = await response.json();
   return data;
+}
+
+export async function createTask(task: Partial<Task>, token: string): Promise<ApiResponse<Task>> {
+  const response = await fetch(`${API_URL}/api/auth/tasks`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(task)
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export async function updateTask(task: Task, token: string): Promise<ApiResponse<Task>> {
+  const response = await fetch(`${API_URL}/api/auth/tasks/${task.id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(task)
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export async function deleteTask(taskId: string, token: string): Promise<ApiResponse<null>> {
+  const response = await fetch(`${API_URL}/api/auth/tasks/${taskId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export function getToken(): string | null {
+  return localStorage.getItem('token');
 }

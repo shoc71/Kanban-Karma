@@ -7,3 +7,9 @@
 2025-02-20T05:38:21.315Z [ERROR]: Token verfitication failed: jwt malformed
 2025-02-20T05:42:09.983Z [ERROR]: Token verfitication failed: jwt malformed
 2025-02-20T05:42:43.050Z [ERROR]: Token verfitication failed: jwt malformed
+2025-02-21T00:25:03.072Z [ERROR]: Token verfitication failed: jwt expired
+2025-02-21T00:25:03.093Z [ERROR]: Token verfitication failed: jwt expired
+2025-02-21T00:27:45.401Z [ERROR]: Token verfitication failed: jwt expired
+2025-02-21T00:27:45.407Z [ERROR]: Token verfitication failed: jwt expired
+2025-02-21T00:32:18.760Z [ERROR]: Token verfitication failed: jwt expired
+2025-02-21T00:32:18.770Z [ERROR]: Token verfitication failed: jwt expired

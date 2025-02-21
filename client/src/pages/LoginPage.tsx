@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
       const res = await loginUser(email, password);
       if (res.success && res.data) {
         setToken(res.data);
-        navigate('/dashboard');
+        navigate('/kanban');
       } else {
         setError(res.message || 'Login failed');
       }

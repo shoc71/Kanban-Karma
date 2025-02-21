@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
@@ -11,6 +10,8 @@ import HomePage from './pages/HomePage';
 import AboutMePage from './pages/AboutMePage';
 import ContactMePage from './pages/ContactMePage';
 import RegisterPage from './pages/RegisterPage';
+// import { getToken } from './utils/api';
+import KanbanBoard from './pages/KanbanBoard';
 
 function App() {
 
@@ -47,9 +48,9 @@ function App() {
         <Route path="/contact-me" element={< ContactMePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
-        <Route path='/dashboard' element={
+        <Route path='/kanban' element={
           <PrivateRoute>
-            <Dashboard />
+            <KanbanBoard />
           </PrivateRoute>
         } />
       </Routes>

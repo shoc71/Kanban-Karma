@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Public Routes & Protected API Routes
 app.use('/api/auth', authRoutes);
-app.use('/api', apiRoutes);
+app.use('/api/auth', apiRoutes);
 
 app.use(errorHandler);
 
