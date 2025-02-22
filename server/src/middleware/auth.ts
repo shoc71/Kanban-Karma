@@ -25,6 +25,7 @@ export function authenticateToken(
     }
 
     const token = authHeader.split(' ')[1];
+    // console.log('Received token:', token);
 
     if (!token) {
         logger.warn('Authentication failed: No token provided')

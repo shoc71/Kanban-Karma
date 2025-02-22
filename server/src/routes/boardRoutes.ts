@@ -1,4 +1,3 @@
-// src/routes/boardRoutes.ts
 import express, { NextFunction, Request, Response } from 'express';
 import prisma from '../db/prisma';
 import { authenticateToken, AuthenticatedRequest } from '../middleware/auth';
@@ -17,7 +16,7 @@ router.get('/', authenticateToken, async (
 
     res.status(200).json({success:true, data: boards});
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching boards' });
+    res.status(500).json({success: false, message: 'Error fetching boards' });
   }
 });
 
@@ -36,9 +35,9 @@ router.post('/', authenticateToken, async (
       },
     });
 
-    res.status(201).json({success: false, data: newBoard});
+    res.status(201).json({success: true, data: newBoard});
   } catch (error) {
-    res.status(500).json({ message: 'Error creating board' });
+    res.status(500).json({succes: false,  message: 'Error creating board' });
   }
 });
 
@@ -60,7 +59,7 @@ router.put('/:id', authenticateToken, async (
     });
 
     if (updatedBoard.count === 0) {
-      res.status(403).json({ message: 'Not authorized to update this board' });
+      res.status(403).json({ success: false, message: 'Not authorized to update this board' });
         return;
     }
 

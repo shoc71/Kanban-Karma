@@ -7,3 +7,9 @@ export interface Task {
   color?: string;
   boardId?: string;
 }
+
+export interface Board {
+  id: string;
+  title: string;
+  createdAt?: string;
+}

@@ -1,4 +1,4 @@
-import type { Task } from "../types";
+import type { Task, Board } from "../types";
 
 const API_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -11,9 +11,7 @@ export interface ApiResponse<T> {
 export async function loginUser(email: string, password: string): Promise<ApiResponse<string>> {
   const response = await fetch(`${API_URL}/api/auth/login`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ email, password })
   });
 
@@ -113,6 +111,44 @@ export async function deleteTask(taskId: string, token: string): Promise<ApiResp
 
   const data = await response.json();
   return data;
+}
+
+export async function fetchBoards(token: string): Promise<ApiResponse<Board[]>> {
+  const response = await fetch(`${API_URL}/api/auth/boards`, {
+    method: 'GET',
+    headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  }
+  });
+  if (!response.ok) throw new Error('Fetching boards failed');
+  return await response.json();
+}
+
+export async function createBoard(title: string, token: string): Promise<ApiResponse<Board>> {
+  const response = await fetch(`${API_URL}/api/auth/boards`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({ title })
+  });
+  if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+  return await response.json();
+}
+
+export async function updateBoard(boardId: string, title: string, token: string): Promise<ApiResponse<Board>> {
+  const response = await fetch(`${API_URL}/api/auth/boards/${boardId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ title })
+  });
+  if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+  return await response.json();
 }
 
 export function getToken(): string | null {
