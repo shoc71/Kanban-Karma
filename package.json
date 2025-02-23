@@ -8,7 +8,7 @@
     "client": "cd client && npm i && npm run dev",
     "server": "cd server && npm i && npm run dev",
     "build": "cd client && npm install && npm run build && cd ../server && npm install",
-    "start": "cd client && node dist/index.js",
+    "start": "cd server && npm install && npm run build && node dist/index.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "dev1": "npm i && concurrently \"npm run server\" \"npm run client\""
   },

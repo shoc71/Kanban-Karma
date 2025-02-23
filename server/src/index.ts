@@ -14,11 +14,11 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-const CLIENT_URL = process.env.CLIENT_URL || `http://localhost:5173`;
-app.use(cors({ origin: CLIENT_URL, credentials: true }));
+// const CLIENT_URL = process.env.CLIENT_URL || `http://localhost:5173`;
+app.use(cors({ origin: `http://localhost:${PORT}`, credentials: true }));
 
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, '../../client/dist')));
+app.use(express.static(path.join(__dirname, '../../client/build')));
 
 // Public Routes & Protected API Routes
 app.use('/api/auth', authRoutes);
@@ -26,7 +26,7 @@ app.use('/api/auth', apiRoutes);
 
 // Catch-all: for any route not matching API, serve React's index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
 });
 
 
