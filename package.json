@@ -2,13 +2,13 @@
   "name": "kanban-karma",
   "version": "1.0.0",
   "description": "Kanban Board Personal Build",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "cd client && npm i && npm run dev",
     "server": "cd server && npm i && npm run dev",
     "build": "cd client && npm install && npm run build && cd ../server && npm install",
-    "start": "node src/index.ts",
+    "start": "node server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "start:prod": "cd server && npm run build"
   },
