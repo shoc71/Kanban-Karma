@@ -25,6 +25,7 @@
   "homepage": "https://github.com/shoc71/Kanban-Karma#readme",
   "dependencies": {
     "concurrently": "^9.1.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "vite": "^6.1.1"
   }
 }
