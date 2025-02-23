@@ -9,7 +9,8 @@
     "server": "cd server && npm i && npm run dev",
     "build": "cd client && npm install && npm run build && cd ../server && npm install",
     "start": "node src/index.ts",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start:prod": "cd server && npm run build"
   },
   "repository": {
     "type": "git",

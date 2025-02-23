@@ -7,8 +7,7 @@
     "start": "tsc && node src/index.js",
     "build": "tsc -b && node dist/index.js",
     "dev": "nodemon src/index.ts",
-    "test": "jest --config=jest.config.js",
-    "start:prod": "cd server && npm run build"
+    "test": "jest --config=jest.config.js"
   },
   "keywords": [],
   "author": "",
