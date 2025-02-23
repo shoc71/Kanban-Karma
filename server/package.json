@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "tsc && node src/server.js",
-    "build": "tsc -b && node dist/server.js",
-    "dev": "nodemon src/server.ts",
+    "start": "tsc && node src/index.js",
+    "build": "tsc -b && node dist/index.js",
+    "dev": "nodemon src/index.ts",
     "test": "jest --config=jest.config.js"
   },
   "keywords": [],
