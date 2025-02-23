@@ -4,19 +4,21 @@
   "description": "Kanban Board Personal Build",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && npm i && npm run dev",
-    "server": "cd server && npm i && npm run dev",
-    "build": "cd client && npm install && npm run build && cd ../server && npm install",
-    "start": "cd server && npm install && npm run build && node dist/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "dev1": "npm i && concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace client && npm run build --workspace server",
+    "start": "npm run build && npm run start --workspace server",
+    "client": "npm run dev --workspace client",
+    "server": "npm run dev --workspace server"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shoc71/Kanban-Karma.git"
   },
   "keywords": [],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
