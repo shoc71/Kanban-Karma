@@ -6,28 +6,39 @@ import path from 'path';
 import authRoutes from './routes/auth';
 import apiRoutes from './routes/index'; 
 import { errorHandler } from './middleware/errorHandler';
+import { fileURLToPath } from 'url';
 
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+const __fileName = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__fileName)
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// const CLIENT_URL = process.env.CLIENT_URL || `http://localhost:5173`;
-app.use(cors({ origin: `http://localhost:${PORT}`, credentials: true }));
-
-// const __dirname = path.resolve();
-// app.use(express.static(path.join(__dirname, '../../client/dist')));
+app.use(cors({ 
+  origin: (origin, callback) => {
+    callback(null, true);
+  },
+  credentials: true 
+}));
 
 // Public Routes & Protected API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/auth', apiRoutes);
 
 // Catch-all: for any route not matching API, serve React's index.html
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../../client/dist', 'index.html'));
-// });
+
+if (process.env.NODE_ENV === 'production') {
+  console.log('production')
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+  })
+}
 
 app.use(errorHandler);
 
