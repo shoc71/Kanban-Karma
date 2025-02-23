@@ -9,7 +9,7 @@
     "server": "cd server && npm i && npm run dev",
     "build": "cd client && npm install && npm run build && cd ../server && npm install",
     "start": "node dist/index.ts",
-    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\""
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -25,10 +25,6 @@
   "homepage": "https://github.com/shoc71/Kanban-Karma#readme",
   "dependencies": {
     "concurrently": "^9.1.2",
-    "cors": "^2.8.5",
-    "react-beautiful-dnd": "^13.1.1"
-  },
-  "devDependencies": {
-    "@types/react-beautiful-dnd": "^13.1.8"
+    "cors": "^2.8.5"
   }
 }

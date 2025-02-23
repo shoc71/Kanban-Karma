@@ -149,7 +149,12 @@ function KanbanBoard() {
     try {
       const res = await updateTask(updatedTask, token);
       if (res.success && res.data) {
-        setTasks(tasks.map(task => task.id === taskId ? res.data : task));
+        setTasks(tasks.map(task => {
+          if (task.id === taskId) {
+            return res.data as Task; // assert the type if you're sure about it
+          }
+          return task;
+        }));
       } else {
         setError(res.message || 'Failed to update task.');
       }
@@ -165,7 +170,9 @@ function KanbanBoard() {
     try {
       const res = await updateTask(updatedTask, token);
       if (res.success && res.data) {
-        setTasks(tasks.map(task => task.id === updatedTask.id ? res.data : task));
+        setTasks(tasks.map(task => 
+          task.id === updatedTask.id ? (res.data as Task) : task
+        ));
         setEditingTask(null);
       } else {
         setError(res.message || 'Failed to update task.');
@@ -181,7 +188,9 @@ function KanbanBoard() {
     try {
       const res = await updateBoard(boardId, newTitle, token);
       if (res.success && res.data) {
-        setBoards(boards.map(board => board.id === boardId ? res.data : board));
+        setBoards(boards.map(board => 
+          board.id === boardId ? (res.data as Board) : board
+        ));
       } else {
         setError(res.message || 'Failed to rename board.');
       }
@@ -314,7 +323,9 @@ function KanbanBoard() {
     try {
       const res = await updateTask(updatedTask, token);
       if (res.success && res.data) {
-        setTasks(tasks.map(task => task.id === taskToMove.id ? res.data : task));
+        setTasks(tasks.map(task => 
+          task.id === taskToMove.id ? (res.data as Task) : task
+        ));
         setTaskToMove(null);
         setShowMoveModal(false);
       } else {

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../utils/api';
 import { setToken } from '../utils/authService';
 import { Button, Form, Alert, Container, Row, Col } from 'react-bootstrap';
 
-const LoginPage: React.FC = () => {
+function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');

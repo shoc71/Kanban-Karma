@@ -41,7 +41,7 @@ function App() {
       minHeight: '100vh',
       color: isDarkMode ? 'white' : 'black'
     }}>
-      <NavBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+      <NavBar isDarkMode={isDarkMode} toggleTheme={toggleTheme} isLoggedIn={false} />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path="/about" element={< AboutMePage />} />

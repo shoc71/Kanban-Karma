@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 export interface NavBarProps {
   isDarkMode: boolean;
   toggleTheme: () => void;
-  isLoggedIn: boolean; // pass a boolean indicating authentication state
+  isLoggedIn?: boolean; // pass a boolean indicating authentication state
 }
 
 function NavBar ({ isDarkMode, toggleTheme, isLoggedIn }: NavBarProps) {
