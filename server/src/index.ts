@@ -19,6 +19,10 @@ const __dirname = path.dirname(__fileName);
 console.log("Running in production with __dirname:", __dirname);
 console.log("PORT from process.env:", process.env.PORT);
 
+const API_BASE_URL = process.env.FRONTEND_URL;
+fetch(`${API_BASE_URL}/api/auth/login`);
+console.log(API_BASE_URL);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
