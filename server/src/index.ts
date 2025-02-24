@@ -4,9 +4,9 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import authRoutes from './routes/auth';
-import apiRoutes from './routes/index'; 
-import { errorHandler } from './middleware/errorHandler';
+import authRoutes from './routes/auth.js';
+import apiRoutes from './routes/index.js'; 
+import { errorHandler } from './middleware/errorHandler.js';
 
 
 dotenv.config();

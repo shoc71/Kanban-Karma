@@ -1,6 +1,6 @@
 import express from 'express';
-import taskRoutes from './taskRoutes';
-import boardRoutes from './boardRoutes';
+import taskRoutes from './taskRoutes.js';
+import boardRoutes from './boardRoutes.js';
 
 const router = express.Router();
 

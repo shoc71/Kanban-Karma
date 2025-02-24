@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import prisma from '../db/prisma';
+import prisma from '../db/prisma.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
