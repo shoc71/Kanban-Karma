@@ -2,21 +2,22 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import authRoutes from './routes/auth';
 import apiRoutes from './routes/index'; 
 import { errorHandler } from './middleware/errorHandler';
-import { fileURLToPath } from 'url';
 
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
+
 const __fileName = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__fileName);
+
 console.log("Running in production with __dirname:", __dirname);
 console.log("PORT from process.env:", process.env.PORT);
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
