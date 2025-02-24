@@ -23,19 +23,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "*", // Allow requests
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }));
 
 // Public Routes & Protected API Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/auth', apiRoutes);
+app.use('/api', apiRoutes);
 
 // Catch-all: for any route not matching API, serve React's index.html
 
 if (process.env.NODE_ENV === 'production') {
   console.log('production')
-  const clientBuildPath = path.resolve(__dirname, '..', '..', 'client', 'dist');
+  const clientBuildPath = path.resolve(__dirname, '..', 'client', 'dist');
   console.log("Client build path:", clientBuildPath);
   app.use(express.static(clientBuildPath));
 
