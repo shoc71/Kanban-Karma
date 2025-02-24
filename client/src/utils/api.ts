@@ -1,7 +1,7 @@
 import type { Task, Board } from "../types";
 
-const API_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5000";
-
+// const API_URL = import.meta.env.REACT_APP_API_URL || "http://localhost:5000";
+const API_URL = ''
 export interface ApiResponse<T> {
   success: boolean;
   data?: T;
@@ -9,7 +9,7 @@ export interface ApiResponse<T> {
 }
 
 export async function loginUser(email: string, password: string): Promise<ApiResponse<string>> {
-  const response = await fetch(`${API_URL}/api/auth/login`, {
+  const response = await fetch(`/api/auth/login`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ email, password })
