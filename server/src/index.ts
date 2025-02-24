@@ -22,11 +22,9 @@ console.log("PORT from process.env:", process.env.PORT);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cors({ 
-  origin: (origin, callback) => {
-    callback(null, true);
-  },
-  credentials: true 
+app.use(cors({
+  origin: process.env.FRONTEND_URL || "*", // Allow requests
+  credentials: true
 }));
 
 // Public Routes & Protected API Routes
@@ -40,9 +38,8 @@ if (process.env.NODE_ENV === 'production') {
   const clientBuildPath = path.resolve(__dirname, '..', 'client', 'dist');
   app.use(express.static(clientBuildPath));
 
-
   app.get('*', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'client', 'dist', 'index.html'));
+    res.sendFile(path.resolve(clientBuildPath, 'index.html'));
   })
 }
 
