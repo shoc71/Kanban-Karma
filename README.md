@@ -47,7 +47,7 @@ For any questions or concerns, please email mrdrlogic@gmail.com
 ## Links
 Youtube Tutorial: [Click Unlisted Video Here](#)
 
-Deployed Webpage: https://kanban-karma.onrender.com/
+Deployed Webpage: [https://kanban-karma.onrender.com/](https://kanban-karma-board.onrender.com/)
 
 GitHub Repo: https://github.com/shoc71/Kanban-Karma/
 
