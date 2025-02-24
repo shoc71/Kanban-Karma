@@ -35,7 +35,8 @@ app.use('/api/auth', apiRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   console.log('production')
-  const clientBuildPath = path.resolve(__dirname, '..', 'client', 'dist');
+  const clientBuildPath = path.resolve(__dirname, '../..', 'client', 'dist');
+  console.log(clientBuildPath)
   app.use(express.static(clientBuildPath));
 
   app.get('*', (_req, res) => {
